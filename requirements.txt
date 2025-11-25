@@ -1,0 +1,10 @@
+pandas
+numpy
+mlflow
+lightfm
+scikit-learn
+fastapi
+uvicorn
+requests
+python-dotenv
+dvc
