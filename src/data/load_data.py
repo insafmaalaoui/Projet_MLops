@@ -1,19 +1,32 @@
-import os
-import shutil
+import pandas as pd
+from pathlib import Path
 
-def preprocess(data_dir="data/raw", output_dir="data/processed"):
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+def load_movielens(data_dir="data/raw/ml-1m"):
+    """
+    Charge les fichiers MovieLens (ratings.dat, movies.dat)
+    et les retourne sous forme de DataFrame pandas.
+    """
 
-    for item_name in os.listdir(data_dir):
-        src_path = os.path.join(data_dir, item_name)
-        dst_path = os.path.join(output_dir, item_name)
+    data_dir = Path(data_dir)
 
-        if os.path.isdir(src_path):
-            # Copier tout le dossier
-            shutil.copytree(src_path, dst_path, dirs_exist_ok=True)
-        else:
-            # Copier un fichier
-            shutil.copy(src_path, dst_path)
+    ratings_cols = ["UserID", "MovieID", "Rating", "Timestamp"]
+    movies_cols = ["MovieID", "Title", "Genres"]
 
-    print(f"✅ Preprocessing terminé, contenu copié dans {output_dir}")
+    print("📥 Chargement des fichiers MovieLens...")
+
+    ratings = pd.read_csv(
+        data_dir / "ratings.dat",
+        sep="::",
+        engine="python",
+        names=ratings_cols
+    )
+
+    movies = pd.read_csv(
+        data_dir / "movies.dat",
+        sep="::",
+        engine="python",
+        names=movies_cols
+    )
+
+    print("✅ Fichiers chargés avec succès !")
+    return ratings, movies
