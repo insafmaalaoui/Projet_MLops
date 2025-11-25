@@ -1,0 +1,15 @@
+# Core ML / Data
+pandas
+numpy
+scikit-learn
+
+# Tracking & MLOps
+mlflow
+
+# Utils
+pyyaml
+joblib
+
+# Optional but useful
+matplotlib
+seaborn
